@@ -1,0 +1,22 @@
+I"§(function() {
+  this.cooking = angular.module('cookingRecipes', ['Devise', 'ngRoute', 'ngResource', 'templates', 'willPaginate']);
+
+  this.cooking.controller('mainCtrl', function($scope, Auth, $log) {
+    $scope.signedIn = Auth.isAuthenticated;
+    $scope.logout = Auth.logout;
+    Auth.currentUser().then(function(user) {
+      return $scope.user = user;
+    });
+    $scope.$on('devise:new-registration', function(e, user) {
+      return $scope.user = user;
+    });
+    $scope.$on('devise:login', function(e, user) {
+      return $scope.user = user;
+    });
+    return $scope.$on('devise:logout', function(e, user) {
+      return $scope.user = {};
+    });
+  });
+
+}).call(this);
+:ET

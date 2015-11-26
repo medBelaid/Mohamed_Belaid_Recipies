@@ -1,0 +1,39 @@
+I"â(function() {
+  this.cooking.controller('homeCtrl', function($scope, $resource, Recipe, $log, $routeParams) {
+    $scope.willPaginateCollection = {};
+    $scope.willPaginateConfig = {
+      previousLabel: '<',
+      nextLabel: '>'
+    };
+    return $scope.getPage = function(page) {
+      $log.info('page ' + page);
+      Recipe.recipes(1).get({
+        mode: 't'
+      }).$promise.then(function(res) {
+        $scope.willPaginateCollection.currentPage = page;
+        $scope.willPaginateCollection.totalEntries = res.total;
+        $scope.willPaginateCollection.totalPages = Math.round(res.total / 10);
+        $scope.willPaginateCollection.perPage = 10;
+        return $scope.willPaginateCollection.offset = 0;
+      });
+      return Recipe.recipes(page).query({
+        mode: 'p'
+      }).$promise.then(function(res) {
+        var i, len, recipe, ref, results;
+        $scope.recipes = res;
+        ref = $scope.recipes;
+        results = [];
+        for (i = 0, len = ref.length; i < len; i++) {
+          recipe = ref[i];
+          results.push(recipe.username = Recipe.recipes(1).get({
+            userId: recipe.user_id,
+            mode: 'getUserRecipe'
+          }));
+        }
+        return results;
+      });
+    };
+  });
+
+}).call(this);
+:ET

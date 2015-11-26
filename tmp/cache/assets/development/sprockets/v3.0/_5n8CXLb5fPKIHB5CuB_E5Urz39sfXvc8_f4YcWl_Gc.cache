@@ -1,0 +1,15 @@
+I"D(function() {
+  this.cooking.directive('listRecipes', function($compile, $resource) {
+    return {
+      templateUrl: 'assets/templates/home/recipes-list.html.haml',
+      restrict: 'E',
+      link: function(scope) {
+        return {
+          controller: function($scope) {}
+        };
+      }
+    };
+  });
+
+}).call(this);
+:ET

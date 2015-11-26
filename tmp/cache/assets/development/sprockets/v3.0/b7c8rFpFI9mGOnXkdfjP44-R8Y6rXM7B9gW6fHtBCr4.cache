@@ -1,0 +1,36 @@
+I"ù(function() {
+  this.cooking.controller('profileCtrl', function($scope, Recipe, $log, Recipes) {
+    $scope.viewProfile = true;
+    $scope.userProfile = $scope.user;
+    $scope.recipes = [];
+    $scope.userss = Recipe.recipes(1).query({
+      mode: 'u'
+    });
+    $scope.getRecipiesUser = function(id) {
+      $scope.viewProfile = false;
+      $scope.recipes = [];
+      return Recipes.$promise.then(function(res) {
+        var i, intermediate, len, recipe, results;
+        intermediate = res;
+        results = [];
+        for (i = 0, len = intermediate.length; i < len; i++) {
+          recipe = intermediate[i];
+          if (recipe.user_id === id) {
+            results.push($scope.recipes.push(recipe));
+          } else {
+            results.push(void 0);
+          }
+        }
+        return results;
+      });
+    };
+    return $scope.getUser = function(id) {
+      return $scope.userProfile = Recipe.recipes(1).get({
+        mode: 'getUserRecipe',
+        userId: id
+      });
+    };
+  });
+
+}).call(this);
+:ET

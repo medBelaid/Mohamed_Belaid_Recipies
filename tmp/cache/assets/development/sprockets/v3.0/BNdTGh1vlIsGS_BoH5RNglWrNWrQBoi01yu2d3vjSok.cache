@@ -1,0 +1,5 @@
+I"d(function() {
+  this.cooking.controller('navCtrl', function($scope, Auth) {});
+
+}).call(this);
+:ET

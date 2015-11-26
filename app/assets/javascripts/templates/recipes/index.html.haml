@@ -1,0 +1,39 @@
+ 
+%form{ng_submit: 'saveRecipe(newRecipe)', enctype:'multipart/form-data', class: 'spacer'}
+  .btn-group.pull-right
+    %input.btn.btn-default.grisLite{type:"submit",value:"Enregistrer"} 
+    %input.btn.btn-default{type:"reset",value:"Vider"}
+  %br
+  %label.spacer Title:
+  %input.form-control{ng_model:'newRecipe.title'}
+  %label Content:
+  %textarea.form-control{ng_model:'newRecipe.content'}
+  %input.form-control.spacer{type:"file",ng_model:'newRecipe.image'}
+
+  %h2.spacer Ingredients
+  .row
+    .col-sm-11{ng_repeat: 'ing in ingredients'}
+      %input{ng_model: 'ing.name', class: 'form-control input-sm'}
+    .col-sm-1
+      %span{class: 'btn btn-success fa fa-plus clickable', ng_click: 'addIngredientToList()' }
+  
+#notice.alert.alert-success.hide.spacer
+  {{notice}} 
+#recipes
+  %div{ ng_repeat: 'r in recipes'}
+    .recipe.row
+      .recipe_image.col-sm-3
+        %img{src: '/assets/Crepe_Sweet.jpg'}
+      .recipe_content.col-sm-7
+        .title
+          %a{ href: "#/recipe?id={{r.id}}" }
+            %h2 {{r.title}}
+        %p {{r.content}}
+      .col-sm-2
+        %button{ class: 'fa fa-pencil-square-o btn btn-sm', ng_click: 'goToEdit(r)'} 
+        %button{ class: 'fa fa-trash btn btn-sm', ng_click: 'deleteRecipe(r)'}
+        
+    
+
+    
+

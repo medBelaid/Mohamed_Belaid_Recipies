@@ -1,0 +1,100 @@
+I"�(function() {
+  this.cooking.controller('recipesCtrl', function($scope, $resource, $http, $log, Auth, Recipe, Recipes, Ingredient, $routeParams) {
+    $scope.newRecipe = {};
+    $scope.ingredients = [];
+    $scope.recipes = [];
+    $scope.idUser = 0;
+    $scope.addIngredientToList = function() {
+      var insertedIng;
+      insertedIng = {
+        name: ''
+      };
+      return $scope.ingredients.push(insertedIng);
+    };
+    Auth.currentUser().then(function(user) {
+      $scope.user = user;
+      $log.info($scope.user);
+      $scope.newRecipe.user_id = $scope.user.id;
+      return $scope.idUser = $scope.user.id;
+    });
+    Recipes.$promise.then(function(res) {
+      var i, intermediate, len, recipe, results;
+      intermediate = res;
+      results = [];
+      for (i = 0, len = intermediate.length; i < len; i++) {
+        recipe = intermediate[i];
+        if (recipe.user_id === $scope.idUser) {
+          results.push($scope.recipes.push(recipe));
+        } else {
+          results.push(void 0);
+        }
+      }
+      return results;
+    });
+    $scope.saveRecipe = function(recipe) {
+      $scope.newRecipe.rate = 4;
+      if (angular.isDefined(recipe.id)) {
+        $scope.editRecipe(recipe);
+        return $log.info('edit');
+      } else {
+        $scope.addRecipe(recipe);
+        return $log.info('add');
+      }
+    };
+    $scope.addRecipe = function(recipe) {
+      $scope.notice = 'l\'ajout de recette ' + recipe.title + ' est effectuée';
+      $('#notice').removeClass('hide');
+      return Recipe.recipes(1).save(recipe).$promise.then(function(res) {
+        var i, ingredient, len, ref;
+        $scope.recipes.unshift(res);
+        ref = $scope.ingredients;
+        for (i = 0, len = ref.length; i < len; i++) {
+          ingredient = ref[i];
+          ingredient.recipe_id = res.id;
+          Ingredient.save(ingredient);
+        }
+        return $scope.newRecipe = {};
+      });
+    };
+    $scope.editRecipe = function(recipe) {
+      var i, ingredient, len, ref;
+      $scope.notice = 'l\'édition de recette ' + recipe.title + ' est effectuée';
+      $('#notice').removeClass('hide');
+      ref = $scope.ingredients;
+      for (i = 0, len = ref.length; i < len; i++) {
+        ingredient = ref[i];
+        ingredient.recipe_id = recipe.id;
+        Ingredient.save(ingredient);
+      }
+      Recipe.recipes(1).update(recipe);
+      $scope.newRecipe = {};
+      return $scope.ingredients = [];
+    };
+    $scope.deleteRecipe = function(recipe) {
+      var index, msg;
+      msg = 'suppression de recette ' + recipe.title + ' ?';
+      if (!confirm(msg)) {
+        return;
+      }
+      $scope.notice = 'la suppression de recette ' + recipe.title + ' est effectuée';
+      $('#notice').removeClass('hide');
+      Recipe.recipes(1)["delete"](recipe);
+      index = $scope.recipes.indexOf(recipe);
+      $scope.recipes.splice(index, 1);
+      $scope.newRecipe = {};
+      return $scope.ingredients = [];
+    };
+    return $scope.goToEdit = function(recipe) {
+      $scope.newRecipe = recipe;
+      window.scrollTo(0, 0);
+      $scope.ingredients = Ingredient.query({
+        recipe_id: recipe.id
+      });
+      return $scope.oldIngredients = Ingredient.query({
+        recipe_id: recipe.id
+      });
+    };
+  });
+
+}).call(this);
+:ET

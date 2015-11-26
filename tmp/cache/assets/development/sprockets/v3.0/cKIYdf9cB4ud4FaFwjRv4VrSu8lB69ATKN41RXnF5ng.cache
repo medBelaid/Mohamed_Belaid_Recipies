@@ -1,0 +1,47 @@
+I"'(function() {
+  this.cooking.controller('viewRecipeCtrl', function($scope, $log, Recipe, Ingredient, Favorite, $routeParams) {
+    var id;
+    id = $routeParams.id;
+    $scope.countLikes = 0;
+    $scope.countLikes = Favorite.get({
+      id: id
+    });
+    Recipe.recipes(1).get({
+      id: id
+    }).$promise.then(function(res) {
+      $scope.recipe = res;
+      return $scope.recipe.username = Recipe.recipes(1).get({
+        userId: res.user_id,
+        mode: 'getUserRecipe'
+      });
+    });
+    $scope.favoriteRecipes = Recipe.recipes(1).query({
+      mode: 'f'
+    }).$promise.then(function(res) {
+      var i, len, recipe, ref, results;
+      $scope.favoriteRecipes = res;
+      ref = $scope.favoriteRecipes;
+      results = [];
+      for (i = 0, len = ref.length; i < len; i++) {
+        recipe = ref[i];
+        recipe.countLikes = Favorite.get({
+          id: recipe.id
+        });
+        results.push($log.info($scope.favoriteRecipes.countLikes));
+      }
+      return results;
+    });
+    $scope.favorite = function() {
+      return Favorite.save($scope.recipe).$promise.then(function(res) {
+        return $scope.countLikes = Favorite.get({
+          id: res.id
+        });
+      });
+    };
+    return $scope.ingridients = Ingredient.query({
+      recipe_id: $routeParams.id
+    });
+  });
+
+}).call(this);
+:ET
