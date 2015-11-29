@@ -1,0 +1,17 @@
+.collapse.navbar-collapse{ ng_controller: 'navCtrl' }
+  %ul.nav.navbar-nav.spacer
+    %li
+      %a{ href: "#/home" } Home
+    %li{ ng_show:  "signedIn()" }
+      %a{ href: "#/recipes" } Recettes
+
+  %ul.nav.navbar-nav.spacer.pull-right
+    %li{ ng_hide: "signedIn()" }
+      %a.user-icon{ href: "#/login" }
+        Log In
+    %li{ ng_show:  "signedIn()" }
+      %a.user-icon{ href: "#/profile" } {{user.name}}
+    %li{ ng_show:  "signedIn()" }
+      %a{ ng_click: "logout()" } Log Out
+
+  %i.fa.fa-user.pull-right.spacer

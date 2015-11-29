@@ -1,0 +1,38 @@
+.row
+  #recipe_show.col-sm-8
+    %h1 {{recipe.title}}
+    %p.username
+      publié: {{recipe.created_at | date:" dd/MM/yyyy 'à' HH:mm"}} par {{recipe.username.name}}
+    .clearfix
+      .recipe_image_description
+        %img{src: '/assets/Crepe_Sweet.jpg'}
+        .description
+          %i{ng_click:'favorite()',class:'fa fa-thumbs-up btn'}
+          %span  {{countLikes.count}} 
+          %br
+          {{recipe.content}}
+    %h2  Ingrédients
+    %ul
+      %li{ng_repeat: 'ingridient in ingridients'}
+        {{ingridient.name}}
+  #favorite_recipe.col-sm-4{ ng_show: "signedIn()" }
+    %h3  liste de favoris
+    .recipe.spacer{ng_repeat: 'fr in favoriteRecipes'}
+      .recipe_image
+        %img{src: '/assets/Crepe_Sweet.jpg'}
+      .recipe_content
+        %h2  
+          {{fr.title}}
+        .data.clearfix
+          %p.username
+            publiée par {{user.name}}
+          %p.buttons
+            %span
+              %i.fa.fa-thumbs-up
+                {{fr.countLikes.count}} 
+
+
+
+
+
+

@@ -1,0 +1,60 @@
+ 
+%form{ng_submit: 'saveRecipe(newRecipe)', enctype:'multipart/form-data', class: 'spacer'}
+  .btn-group.pull-right
+    %input.btn.btn-default.grisLite{type:"submit",value:"Enregistrer"} 
+    %input.btn.btn-default{type:"reset",value:"Vider"}
+  %br
+  %label.spacer Title:
+  %input.form-control{ng_model:'newRecipe.title'}
+  %label Content:
+  %textarea.form-control{ng_model:'newRecipe.content'}
+  %input.form-control.spacer(type="file" nv_file_select uploader="uploader")
+
+  %h2.spacer Ingredients
+  .row
+    .col-sm-6.row#addIngredient
+      %h3  sélectionner un ingrédient
+      .col-sm-10
+        %ui_select{ng_model: 'intermediateIngredient.selected',theme:'bootstrap',reset_search_input:'false'}
+          %ui_select_match
+            {{$select.selected.name}}
+          %ui_select_choices{repeat:'rec in allIngredients | filter:$select.search'}
+            {{rec.name}}
+      .col-sm-2
+        %span.btn.btn-success.fa.fa-plus.clickable{ ng_click: 'addIngredientToList(intermediateIngredient.selected)' }
+    .col-sm-6.row.pull-right#addIngredient
+      %h3  ajouter un ingrédient 
+      .col-sm-10
+        %input.form-control.input-sm{ng_model:'newIngredient.name'}
+      .col-sm-2
+        %span.btn.btn-success.fa.fa-plus.clickable{ ng_click: 'addIngredientToList(newIngredient)' }
+    .col-sm-12.spacer 
+      %span#ingredient{ng_repeat: 'ing in ingredients'}
+        {{ing.name}}
+        %i.fa.fa-times.clickable{ng_click:'deleteIngredient(ing)'}
+  
+#notice.alert.alert-success.hide.spacer
+  {{notice}} 
+#notice2.alert.alert-danger.hide.spacer
+  {{notice}} 
+#recipes
+  %div{ ng_repeat: 'r in recipes'}
+    .recipe.row
+      .recipe_image.col-sm-3
+        %img{src: '/assets/Crepe_Sweet.jpg'}
+      .recipe_content.col-sm-7
+        .title
+          %a{ href: "#/recipe?id={{r.id}}" }
+            %h2 {{r.title}}
+        %p {{r.content}}
+      .col-sm-2
+        %button{ class: 'fa fa-pencil-square-o btn btn-sm', ng_click: 'goToEdit(r)'} 
+        %button{ class: 'fa fa-trash btn btn-sm', ng_click:'goToDeletePopup(r)'}
+
+%popup_delete
+
+        
+    
+
+    
+

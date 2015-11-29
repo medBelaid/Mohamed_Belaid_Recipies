@@ -1,0 +1,10 @@
+#popup
+  %iframe.popup{src:"assets/templates/popup-animation/Untitled-1.html?wmode=opaque",width:"600",height:"400",frameborder:"0",scrolling:"no"}
+  .btn-cancel-sm-delete
+    %img{src: 'assets/exit.png',ng_click:'cancelDelete()'}
+  .btn-cancel-delete
+    %img{src: 'assets/btn2.png',ng_click:'cancelDelete()'}
+  .btn-confirm-delete
+    %img{src: 'assets/btn1.png',ng_click:'deleteRecipe()'}
+  .title-recipe-delete
+    %span  {{recipeToDelete.title}}

@@ -1,0 +1,106 @@
+// "bootstrap-sprockets" must be imported before "bootstrap" and "bootstrap/variables"
+/*
+ *= require_self
+ */
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import 'recipes.scss';
+@import 'home.scss';
+@import 'select.min.css';
+
+.spacer {
+	margin-top: 20px
+}
+.spacer2 {
+  margin-bottom: 20px
+}
+.grisLite{
+	background-color:'#E8E8E8' !important;
+}
+i.fa.fa-user{
+  margin-right: 1rem;
+  color: #000;
+  zoom:1.7;
+} 
+.user-icon{
+	color: #000;
+}
+
+#popup{
+    
+    display: none;
+	position: fixed;
+	top: 20%;
+	z-index: 1001;
+    .popup{
+	    text-align: center;
+	    z-index: 1001;
+	}
+	.btn-cancel-sm-delete{
+		position: absolute;
+		right: 10%;
+		zoom:.7;
+	 	z-index: 1002;
+	 	top:5%;
+	 	cursor: pointer;
+	} 
+	.btn-cancel-delete{
+		position: absolute;
+		right: 15%;
+	 	z-index: 1002;
+	 	top:75%;
+	 	cursor: pointer;
+	} 
+	.btn-confirm-delete{
+		position: absolute;
+		left: 10%;
+	 	z-index: 1002;
+	 	top:75%;
+	 	cursor: pointer;
+	}
+	.title-recipe-delete{
+		position: absolute;
+		left: 10%;
+	 	z-index: 1003;
+	 	top:25%;
+	 	width: 200px;
+	 	color:#6193B4;
+	 	font-size: 4rem;
+	 	font-family: 'Tangerine', serif;
+	 	font-weight: bold;
+
+		/* Safari */
+		-webkit-transform: rotate(-4deg);
+
+		/* Firefox */
+		-moz-transform: rotate(-4deg);
+
+		/* IE */
+		-ms-transform: rotate(-4deg);
+
+		/* Opera */
+		-o-transform: rotate(-4deg);
+
+		/* Internet Explorer */
+		filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+	}
+}
+
+.edgeLoad-EDGE-70268760 { 
+    visibility:hidden;
+}
+
+#black_overlay {
+	display: none;
+	position: fixed;
+	top: 0%;
+	left: 0%;
+	width: 100%;
+	height: 100%;
+	background-color: black;
+	z-index: 1000;
+	-moz-opacity: 0.5;
+	opacity: .50;
+	filter: alpha(opacity = 80);
+}
+
